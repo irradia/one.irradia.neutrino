@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="one.irradia.neutrino.sandbox">
+
+  <application
+    android:icon="@drawable/neutrino_irradia_star"
+    android:theme="@style/NeutrinoTheme">
+    <activity
+      android:name="one.irradia.neutrino.sandbox.BasicReader"
+      android:exported="true" />
+  </application>
+
+</manifest>
