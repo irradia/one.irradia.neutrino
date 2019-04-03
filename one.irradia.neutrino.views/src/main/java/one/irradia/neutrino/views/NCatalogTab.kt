@@ -14,14 +14,11 @@ class NCatalogTab(
   NeutrinoTabType {
 
   companion object {
-    private fun rootPageConstructor(context: Context): NPageConstructor {
-      return NPageConstructor {
-        NPageFeed.create(NPageFeedArguments(
-          depth = 0,
-          isExternalCollection = true,
-          title = context.getString(R.string.neutrino_tab_catalog)))
-      }
-    }
+    private fun rootPageConstructor(context: Context): NPageConstructor =
+      NPageFeed.constructor(NPageFeedArguments(
+        depth = 0,
+        isExternalCollection = true,
+        title = context.getString(R.string.neutrino_tab_catalog)))
   }
 }
 

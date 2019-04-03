@@ -1,6 +1,6 @@
 package one.irradia.neutrino.views
 
-import one.irradia.neutrino.views.NeutrinoTabEvent.*
+import one.irradia.neutrino.views.NeutrinoTabEvent.TabPageStackChanged
 import java.io.Serializable
 
 /**

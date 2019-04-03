@@ -13,7 +13,7 @@ class NCatalogPageCollectionSelect : NPageAbstract() {
     constructor()
 
   data class Parameters(
-    val unused: Int): Serializable
+    val unused: Int) : Serializable
 
   companion object {
 

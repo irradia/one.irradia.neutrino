@@ -10,14 +10,5 @@ class NSettingsTab(
   context: Context,
   override val tabIndex: Int,
   listener: NeutrinoListenerType)
-  : NPageStackTab(rootPage = rootPageConstructor(), listener = listener),
-  NeutrinoTabType {
-
-  companion object {
-    private fun rootPageConstructor(): NPageConstructor {
-      return NPageConstructor {
-        NSettingsPageMain.create(NSettingsPageMain.Parameters(unused = 23))
-      }
-    }
-  }
-}
+  : NPageStackTab(rootPage = NSettingsPageMain.constructor(), listener = listener),
+  NeutrinoTabType

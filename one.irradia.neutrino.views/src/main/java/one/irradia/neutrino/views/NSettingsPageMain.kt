@@ -8,18 +8,22 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import one.irradia.neutrino.views.NeutrinoPageEvent.*
+import one.irradia.neutrino.views.NeutrinoPageEvent.OpenPageOnCurrentTab
+import one.irradia.neutrino.views.NeutrinoPageEvent.OpenPageOnSpecificTab
 import java.io.Serializable
 
 class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
 
   override fun pageSaveState(): NPageConstructor =
-    NPageConstructor { create(Parameters(unused = 23)) }
+    constructor()
 
   data class Parameters(
     val unused: Int) : Serializable
 
   companion object {
+    fun constructor(): NPageConstructor =
+      NPageConstructor { create(Parameters(unused = 23)) }
+
     fun create(parameters: Parameters): NSettingsPageMain {
       val page = NSettingsPageMain()
       val bundle = Bundle()
