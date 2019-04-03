@@ -1,5 +1,7 @@
 package one.irradia.neutrino.views
 
+import java.io.Serializable
+
 /**
  * The interface exposed by tabs.
  */
@@ -17,6 +19,18 @@ interface NeutrinoTabType {
    */
 
   fun tabWantsUpButton(): Boolean
+
+  /**
+   * Save the state of the tab for later restoration.
+   */
+
+  fun tabSaveState(): Serializable
+
+  /**
+   * Restore the tab from the given state.
+   */
+
+  fun tabRestoreState(state: Serializable)
 
   /**
    * The user pressed the "up" button. The tab implementation should perform any required

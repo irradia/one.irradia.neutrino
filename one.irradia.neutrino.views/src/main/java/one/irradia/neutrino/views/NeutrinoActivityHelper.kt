@@ -13,6 +13,7 @@ object NeutrinoActivityHelper {
   fun onNeutrinoTabPageStackChanged(
     activity: AppCompatActivity,
     tab: NeutrinoTabType) {
+
     val page = tab.tabPageCurrent()
 
     activity.supportFragmentManager

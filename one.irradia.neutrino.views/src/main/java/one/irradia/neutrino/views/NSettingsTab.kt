@@ -9,5 +9,14 @@ import android.content.Context
 class NSettingsTab(
   context: Context,
   listener: NeutrinoListenerType)
-  : NPageStackTab(rootPage = NSettingsPageMain(), listener = listener),
-  NeutrinoTabType
+  : NPageStackTab(rootPage = rootPageConstructor(), listener = listener),
+  NeutrinoTabType {
+
+  companion object {
+    private fun rootPageConstructor(): NPageConstructor {
+      return NPageConstructor {
+        NSettingsPageMain.create(NSettingsPageMain.Parameters(unused = 23))
+      }
+    }
+  }
+}

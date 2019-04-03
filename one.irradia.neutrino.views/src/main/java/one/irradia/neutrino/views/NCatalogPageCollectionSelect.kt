@@ -5,8 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import java.io.Serializable
 
 class NCatalogPageCollectionSelect : NPageAbstract() {
+
+  override fun pageSaveState(): NPageConstructor =
+    NPageConstructor { create(Parameters(unused = 23)) }
+
+  data class Parameters(
+    val unused: Int): Serializable
+
+  companion object {
+    fun create(parameters: Parameters): NSettingsPageMain {
+      val page = NSettingsPageMain()
+      val bundle = Bundle()
+      bundle.putSerializable("one.irradia.neutrino.views.NCatalogPageCollectionSelect", parameters)
+      page.arguments = bundle
+      return page
+    }
+  }
 
   override fun pageTitle(): String? {
     return context?.resources?.getString(R.string.neutrino_collection_select)

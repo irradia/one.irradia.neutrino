@@ -9,7 +9,7 @@ import android.content.Context
 class NCatalogTab(
   context: Context,
   private val listener: NeutrinoListenerType)
-  : NPageStackTab(rootPage = NPageFeed.create(startingArguments(context)), listener = listener),
+  : NPageStackTab(rootPage = rootPageConstructor(context), listener = listener),
   NeutrinoTabType {
 
   init {
@@ -19,11 +19,13 @@ class NCatalogTab(
   }
 
   companion object {
-    private fun startingArguments(context: Context): NPageFeedArguments {
-      return NPageFeedArguments(
-        depth = 0,
-        isExternalCollection = true,
-        title = context.getString(R.string.neutrino_tab_catalog))
+    private fun rootPageConstructor(context: Context): NPageConstructor {
+      return NPageConstructor {
+        NPageFeed.create(NPageFeedArguments(
+          depth = 0,
+          isExternalCollection = true,
+          title = context.getString(R.string.neutrino_tab_catalog)))
+      }
     }
   }
 

@@ -27,6 +27,7 @@ class NeutrinoMain : NeutrinoFragment() {
   private lateinit var tabCurrent: NeutrinoTabType
   private lateinit var tabsByIndex: Map<Int, NeutrinoTabType>
   private var tabCurrentIndex: Int = 0
+  private var tabStates: Map<Int, Serializable>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -38,8 +39,10 @@ class NeutrinoMain : NeutrinoFragment() {
     if (savedInstanceState != null) {
       val savedState =
         savedInstanceState.getSerializable(SAVED_STATE_KEY) as SavedState?
+
       if (savedState != null) {
         this.tabCurrentIndex = savedState.selectedTabIndex
+        this.tabStates = savedState.tabStates
       }
     }
 
@@ -61,13 +64,23 @@ class NeutrinoMain : NeutrinoFragment() {
   }
 
   data class SavedState(
-    val selectedTabIndex: Int)
+    val selectedTabIndex: Int,
+    val tabStates: Map<Int, Serializable>)
     : Serializable
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
 
-    val state = SavedState(selectedTabIndex = this.tabCurrentIndex)
+    val tabStates = HashMap<Int, Serializable>()
+    for (entry in this.tabsByIndex) {
+      tabStates[entry.key] = entry.value.tabSaveState()
+    }
+
+    val state =
+      SavedState(
+        selectedTabIndex = this.tabCurrentIndex,
+        tabStates = tabStates)
+
     outState.putSerializable(SAVED_STATE_KEY, state)
   }
 
@@ -104,6 +117,17 @@ class NeutrinoMain : NeutrinoFragment() {
         Pair(1, this.tabBooks),
         Pair(2, this.tabReservations),
         Pair(3, this.tabSettings))
+
+    val savedStates = this.tabStates
+    if (savedStates != null) {
+      for (entry in this.tabsByIndex) {
+        val state = savedStates[entry.key]
+        if (state != null) {
+          entry.value.tabRestoreState(state)
+        }
+      }
+      this.tabStates = null
+    }
 
     this.tabLayout.getTabAt(this.tabCurrentIndex)?.select()
   }

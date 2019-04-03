@@ -11,6 +11,15 @@ import androidx.fragment.app.Fragment
 
 class NPageFeed : NPageAbstract(), NeutrinoPageType {
 
+  override fun pageSaveState(): NPageConstructor? {
+    val arguments = this.feedArguments
+    return if (arguments != null) {
+      NPageConstructor { create(arguments) }
+    } else {
+      null
+    }
+  }
+
   companion object {
     fun create(arguments: NPageFeedArguments): NPageFeed {
       val result = NPageFeed()

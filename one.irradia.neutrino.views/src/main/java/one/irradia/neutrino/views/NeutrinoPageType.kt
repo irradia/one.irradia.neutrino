@@ -19,4 +19,10 @@ interface NeutrinoPageType {
    */
 
   fun pageTitle(): String?
+
+  /**
+   * Save a function that can recreate the current page when evaluated.
+   */
+
+  fun pageSaveState(): NPageConstructor?
 }
