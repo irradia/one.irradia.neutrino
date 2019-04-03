@@ -14,14 +14,17 @@ abstract class NPageStackTab(
 
   private val pageStack = mutableListOf(rootPage)
 
-  override fun tabPageCurrent(): NeutrinoPageType =
+  final override fun tabPageCurrent(): NeutrinoPageType =
     this.pageStack.last()
 
-  override fun onUpPressed(): Boolean =
+  final override fun onPressedUp(): Boolean =
     this.pagePop()
 
-  override fun tabWantsUpButton(): Boolean =
+  final override fun tabWantsUpButton(): Boolean =
     this.pageStack.size > 1
+
+  final override fun onPressedBack(): Boolean =
+    true
 
   protected fun pagePop(): Boolean =
     if (this.pageStack.size > 1) {

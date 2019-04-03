@@ -33,8 +33,6 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
     if (this.feedArguments!!.isExternalCollection) {
       this.setHasOptionsMenu(true)
     }
-
-    this.listener.onNeutrinoPageMenuUpdated(this)
   }
 
   override fun onCreateOptionsMenu(
@@ -88,4 +86,8 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
     }
   }
 
+  override fun onStart() {
+    super.onStart()
+    this.listener.onNeutrinoPageMenuUpdated(this)
+  }
 }

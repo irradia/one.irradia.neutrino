@@ -23,6 +23,12 @@ interface NeutrinoTabType {
    * actions such as popping pages from internal stacks, etc.
    */
 
-  fun onUpPressed(): Boolean
+  fun onPressedUp(): Boolean
 
+  /**
+   * The user pressed the "back" button. The tab implementation should perform any required
+   * actions such as popping pages from internal stacks, etc.
+   */
+
+  fun onPressedBack(): Boolean
 }

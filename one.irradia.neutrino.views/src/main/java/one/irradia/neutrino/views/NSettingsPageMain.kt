@@ -12,8 +12,8 @@ class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
     return context?.resources?.getString(R.string.neutrino_tab_settings)
   }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+  override fun onStart() {
+    super.onStart()
     this.listener.onNeutrinoPageMenuUpdated(this)
   }
 

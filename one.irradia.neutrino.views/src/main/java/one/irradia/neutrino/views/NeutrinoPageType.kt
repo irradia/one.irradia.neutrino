@@ -19,5 +19,4 @@ interface NeutrinoPageType {
    */
 
   fun pageTitle(): String?
-
 }

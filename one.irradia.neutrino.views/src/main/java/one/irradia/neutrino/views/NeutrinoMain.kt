@@ -1,14 +1,21 @@
 package one.irradia.neutrino.views
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import io.reactivex.subjects.PublishSubject
+import java.io.Serializable
 
-class NeutrinoMain : Fragment() {
+class NeutrinoMain : NeutrinoFragment() {
+
+  companion object {
+    private const val SAVED_STATE_KEY = "one.irradia.neutrino.views.NeutrinoMain.state"
+  }
+
+  val eventBus: PublishSubject<NeutrinoEventType> = PublishSubject.create<NeutrinoEventType>()
 
   private lateinit var tabLayout: TabLayout
   private lateinit var tabCatalog: NCatalogTab
@@ -18,21 +25,27 @@ class NeutrinoMain : Fragment() {
   private lateinit var listener: NeutrinoListenerType
   private lateinit var tabListener: NTabListener
   private lateinit var tabCurrent: NeutrinoTabType
-  private lateinit var tabs: List<NeutrinoTabType>
+  private lateinit var tabsByIndex: Map<Int, NeutrinoTabType>
+  private var tabCurrentIndex: Int = 0
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
+    /*
+     * Restore the saved state if necessary.
+     */
+
+    if (savedInstanceState != null) {
+      val savedState =
+        savedInstanceState.getSerializable(SAVED_STATE_KEY) as SavedState?
+      if (savedState != null) {
+        this.tabCurrentIndex = savedState.selectedTabIndex
+      }
+    }
+
+    val context = this.requireContext()
     if (context is NeutrinoListenerType) {
       this.listener = context
-
-      this.tabCatalog = NCatalogTab(context, this.listener)
-      this.tabBooks = NBooksTab(context, this.listener)
-      this.tabReservations = NReservationsTab(context, this.listener)
-      this.tabSettings = NSettingsTab(this.listener)
-
-      this.tabs = listOf(this.tabCatalog, this.tabBooks, this.tabReservations, this.tabSettings)
-      this.tabCurrent = this.tabCatalog
     } else {
       throw ClassCastException(
         StringBuilder(64)
@@ -47,6 +60,17 @@ class NeutrinoMain : Fragment() {
     }
   }
 
+  data class SavedState(
+    val selectedTabIndex: Int)
+    : Serializable
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+
+    val state = SavedState(selectedTabIndex = this.tabCurrentIndex)
+    outState.putSerializable(SAVED_STATE_KEY, state)
+  }
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -57,13 +81,47 @@ class NeutrinoMain : Fragment() {
     this.tabLayout = view.findViewById(R.id.neutrinoTabLayout)
     this.tabListener = this.NTabListener()
     this.tabLayout.addOnTabSelectedListener(this.tabListener)
-    this.selectCatalog()
     return view
+  }
+
+  override fun onStart() {
+    super.onStart()
+
+    val context = this.requireContext()
+
+    this.tabCatalog =
+      NCatalogTab(context, this.listener)
+    this.tabBooks =
+      NBooksTab(context, this.listener)
+    this.tabReservations =
+      NReservationsTab(context, this.listener)
+    this.tabSettings =
+      NSettingsTab(context, this.listener)
+
+    this.tabsByIndex =
+      mapOf(
+        Pair(0, this.tabCatalog),
+        Pair(1, this.tabBooks),
+        Pair(2, this.tabReservations),
+        Pair(3, this.tabSettings))
+
+    this.tabLayout.getTabAt(this.tabCurrentIndex)?.select()
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      android.R.id.home -> this.onPressedUp()
+      else -> true
+    }
   }
 
   inner class NTabListener : TabLayout.OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab) {
-
+      val index = tab.position
+      val neutrinoTab = this@NeutrinoMain.tabsByIndex[index]
+      if (neutrinoTab != null) {
+        this@NeutrinoMain.selectTab(neutrinoTab, index)
+      }
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -71,37 +129,25 @@ class NeutrinoMain : Fragment() {
     }
 
     override fun onTabSelected(tab: TabLayout.Tab) {
-      when (tab.position) {
-        0 -> this@NeutrinoMain.selectCatalog()
-        1 -> this@NeutrinoMain.selectBooks()
-        2 -> this@NeutrinoMain.selectReservations()
-        3 -> this@NeutrinoMain.selectSettings()
+      val index = tab.position
+      val neutrinoTab = this@NeutrinoMain.tabsByIndex[index]
+      if (neutrinoTab != null) {
+        this@NeutrinoMain.selectTab(neutrinoTab, index)
       }
     }
   }
 
-  private fun selectTab(tab: NeutrinoTabType) {
+  private fun selectTab(tab: NeutrinoTabType, index: Int) {
+    this.tabCurrentIndex = index
     this.tabCurrent = tab
     this.listener.onNeutrinoTabSelected(tab)
   }
 
-  private fun selectSettings() =
-    this.selectTab(this.tabSettings)
-
-  private fun selectReservations() =
-    this.selectTab(this.tabReservations)
-
-  private fun selectBooks() =
-    this.selectTab(this.tabBooks)
-
-  private fun selectCatalog() =
-    this.selectTab(this.tabCatalog)
-
-  fun onBackPressed(): Boolean {
-    return false
+  fun onPressedBack(): Boolean {
+    return this.tabCurrent.onPressedBack()
   }
 
-  fun onUpPressed(): Boolean {
-    return this.tabCurrent.onUpPressed()
+  fun onPressedUp(): Boolean {
+    return this.tabCurrent.onPressedUp()
   }
 }
