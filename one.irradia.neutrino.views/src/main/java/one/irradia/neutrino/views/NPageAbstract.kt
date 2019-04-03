@@ -29,4 +29,9 @@ abstract class NPageAbstract : NeutrinoFragment(), NeutrinoPageType {
           .toString())
     }
   }
+
+  override fun onStart() {
+    super.onStart()
+    this.listener.onNeutrinoPageMenuUpdated(this)
+  }
 }

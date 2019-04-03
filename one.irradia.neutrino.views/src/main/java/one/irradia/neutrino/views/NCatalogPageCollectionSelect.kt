@@ -37,11 +37,6 @@ class NCatalogPageCollectionSelect : NPageAbstract() {
     return this
   }
 
-  override fun onStart() {
-    super.onStart()
-    this.listener.onNeutrinoPageMenuUpdated(this)
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,

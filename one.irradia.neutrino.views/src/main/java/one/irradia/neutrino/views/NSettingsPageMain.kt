@@ -33,11 +33,6 @@ class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
     return context?.resources?.getString(R.string.neutrino_tab_settings)
   }
 
-  override fun onStart() {
-    super.onStart()
-    this.listener.onNeutrinoPageMenuUpdated(this)
-  }
-
   override fun pageFragment(): Fragment {
     return this
   }

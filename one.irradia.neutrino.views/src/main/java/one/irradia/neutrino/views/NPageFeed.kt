@@ -103,9 +103,4 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
       inflater.inflate(R.layout.neutrino_nothing, container, false)
     }
   }
-
-  override fun onStart() {
-    super.onStart()
-    this.listener.onNeutrinoPageMenuUpdated(this)
-  }
 }
