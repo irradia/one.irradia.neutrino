@@ -8,6 +8,7 @@ import android.content.Context
 
 class NReservationsTab(
   context: Context,
+  override val tabIndex: Int,
   listener: NeutrinoListenerType)
   : NPageStackTab(rootPage = rootPageConstructor(context), listener = listener),
   NeutrinoTabType {

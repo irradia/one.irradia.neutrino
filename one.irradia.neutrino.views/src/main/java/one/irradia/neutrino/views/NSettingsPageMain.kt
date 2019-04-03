@@ -2,14 +2,13 @@ package one.irradia.neutrino.views
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
-import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
+import one.irradia.neutrino.views.NeutrinoPageEvent.*
 import java.io.Serializable
 
 class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
@@ -18,7 +17,7 @@ class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
     NPageConstructor { create(Parameters(unused = 23)) }
 
   data class Parameters(
-    val unused: Int): Serializable
+    val unused: Int) : Serializable
 
   companion object {
     fun create(parameters: Parameters): NSettingsPageMain {
@@ -49,18 +48,40 @@ class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
     savedInstanceState: Bundle?): View? {
     super.onCreateView(inflater, container, savedInstanceState)
 
-    val view = inflater.inflate(R.layout.neutrino_settings_page_main, container, false)
+    val view =
+      inflater.inflate(R.layout.neutrino_settings_page_main, container, false)
 
     val progress =
       view.findViewById<ProgressBar>(R.id.neutrinoSettingsPageProgress)
-    val button =
+    val buttonHere =
       view.findViewById<Button>(R.id.neutrinoSettingsPageButton)
+    val buttonElsewhere =
+      view.findViewById<Button>(R.id.neutrinoSettingsPageElsewhereButton)
 
-    button.setOnClickListener {
+    buttonHere.setOnClickListener {
       progress.visibility = View.VISIBLE
       Handler().postDelayed({
         progress.visibility = View.INVISIBLE
-        this.listener.neutrinoEventBus.onNext(NCatalogEvent.NCatalogCollectionSelectOpenRequested)
+
+        this.listener.neutrinoEventBus.onNext(
+          OpenPageOnCurrentTab(
+            callingPage = this,
+            constructor = NCatalogPageCollectionSelect.constructor()))
+
+      }, 2_000)
+    }
+
+    buttonElsewhere.setOnClickListener {
+      progress.visibility = View.VISIBLE
+      Handler().postDelayed({
+        progress.visibility = View.INVISIBLE
+
+        this.listener.neutrinoEventBus.onNext(
+          OpenPageOnSpecificTab(
+            callingPage = this,
+            tab = NBooksTab::class.java,
+            constructor = NCatalogPageCollectionSelect.constructor()))
+
       }, 2_000)
     }
 

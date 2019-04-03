@@ -18,11 +18,11 @@ class BasicReader : AppCompatActivity(), NeutrinoListenerType {
 
   private lateinit var neutrinoMain: NeutrinoMain
 
-  override fun onNeutrinoTabPageStackChanged(tab: NeutrinoTabType) =
-    NeutrinoActivityHelper.onNeutrinoTabPageStackChanged(this, tab)
-
   override fun onNeutrinoPageMenuUpdated(page: NeutrinoPageType) =
     NeutrinoActivityHelper.onNeutrinoPageMenuUpdated(this, page)
+
+  override fun onNeutrinoTabUpdated(tab: NeutrinoTabType) =
+    NeutrinoActivityHelper.onNeutrinoTabUpdated(this, tab)
 
   override fun onNeutrinoTabSelected(tab: NeutrinoTabType) =
     NeutrinoActivityHelper.onNeutrinoTabSelected(this, tab)

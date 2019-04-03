@@ -1,5 +1,6 @@
 package one.irradia.neutrino.views
 
+import one.irradia.neutrino.views.NeutrinoTabEvent.*
 import java.io.Serializable
 
 /**
@@ -14,7 +15,7 @@ abstract class NPageStackTab(
   private val rootPage: NPageConstructor,
   private val listener: NeutrinoListenerType) : NeutrinoTabType {
 
-  private val pageStack : MutableList<NeutrinoPageType> =
+  private val pageStack: MutableList<NeutrinoPageType> =
     mutableListOf(this.rootPage.constructor.invoke())
 
   final override fun tabSaveState(): Serializable {
@@ -29,7 +30,7 @@ abstract class NPageStackTab(
   }
 
   final override fun tabRestoreState(state: Serializable) {
-    val stack : List<NPageConstructor> = state as List<NPageConstructor>
+    val stack: List<NPageConstructor> = state as List<NPageConstructor>
     if (!stack.isEmpty()) {
       this.pageStack.clear()
       for (pageConstructor in stack) {
@@ -53,10 +54,16 @@ abstract class NPageStackTab(
   final override fun onPressedBack(): Boolean =
     true
 
+  final override fun tabPageCreate(constructor: NPageConstructor) =
+    this.pagePush(constructor.constructor.invoke())
+
+  final override fun tabHasPage(page: NeutrinoPageType): Boolean =
+    this.pageStack.contains(page)
+
   protected fun pagePop(): Boolean =
     if (this.pageStack.size > 1) {
       this.pageStack.removeAt(this.pageStack.lastIndex)
-      this.listener.onNeutrinoTabPageStackChanged(this)
+      this.listener.neutrinoEventBus.onNext(TabPageStackChanged(this))
       true
     } else {
       false
@@ -64,6 +71,6 @@ abstract class NPageStackTab(
 
   protected fun pagePush(page: NeutrinoPageType) {
     this.pageStack.add(page)
-    this.listener.onNeutrinoTabPageStackChanged(this)
+    this.listener.neutrinoEventBus.onNext(TabPageStackChanged(this))
   }
 }

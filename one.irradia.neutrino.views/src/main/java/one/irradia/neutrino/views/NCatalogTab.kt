@@ -8,15 +8,10 @@ import android.content.Context
 
 class NCatalogTab(
   context: Context,
-  private val listener: NeutrinoListenerType)
+  override val tabIndex: Int,
+  listener: NeutrinoListenerType)
   : NPageStackTab(rootPage = rootPageConstructor(context), listener = listener),
   NeutrinoTabType {
-
-  init {
-    val subscription =
-      this.listener.neutrinoEventBus.ofType(NCatalogEvent::class.java)
-        .subscribe { event -> this.onCatalogEvent(event) }
-  }
 
   companion object {
     private fun rootPageConstructor(context: Context): NPageConstructor {
@@ -28,15 +23,5 @@ class NCatalogTab(
       }
     }
   }
-
-  private val pageCollectionSelect: NCatalogPageCollectionSelect = NCatalogPageCollectionSelect()
-
-  private fun onCatalogEvent(event: NCatalogEvent) =
-    when (event) {
-      NCatalogEvent.NCatalogCollectionSelectOpenRequested ->
-        this.pagePush(this.pageCollectionSelect)
-      is NCatalogEvent.NCatalogFeedRequested ->
-        this.pagePush(NPageFeed.create(event.arguments))
-    }
 }
 

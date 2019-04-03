@@ -6,13 +6,13 @@ interface NeutrinoListenerType {
 
   val neutrinoEventBus: Subject<NeutrinoEventType>
 
-  fun onNeutrinoTabPageStackChanged(
+  fun onNeutrinoTabSelected(
+    tab: NeutrinoTabType)
+
+  fun onNeutrinoTabUpdated(
     tab: NeutrinoTabType)
 
   fun onNeutrinoPageMenuUpdated(
     page: NeutrinoPageType)
-
-  fun onNeutrinoTabSelected(
-    tab: NeutrinoTabType)
 
 }

@@ -10,14 +10,18 @@ import java.io.Serializable
 class NCatalogPageCollectionSelect : NPageAbstract() {
 
   override fun pageSaveState(): NPageConstructor =
-    NPageConstructor { create(Parameters(unused = 23)) }
+    constructor()
 
   data class Parameters(
     val unused: Int): Serializable
 
   companion object {
-    fun create(parameters: Parameters): NSettingsPageMain {
-      val page = NSettingsPageMain()
+
+    fun constructor(): NPageConstructor =
+      NPageConstructor { create(Parameters(unused = 23)) }
+
+    fun create(parameters: Parameters): NCatalogPageCollectionSelect {
+      val page = NCatalogPageCollectionSelect()
       val bundle = Bundle()
       bundle.putSerializable("one.irradia.neutrino.views.NCatalogPageCollectionSelect", parameters)
       page.arguments = bundle

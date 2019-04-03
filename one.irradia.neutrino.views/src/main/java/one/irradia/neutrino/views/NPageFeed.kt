@@ -14,13 +14,17 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
   override fun pageSaveState(): NPageConstructor? {
     val arguments = this.feedArguments
     return if (arguments != null) {
-      NPageConstructor { create(arguments) }
+      constructor(arguments)
     } else {
       null
     }
   }
 
   companion object {
+
+    fun constructor(arguments: NPageFeedArguments): NPageConstructor =
+      NPageConstructor { create(arguments) }
+
     fun create(arguments: NPageFeedArguments): NPageFeed {
       val result = NPageFeed()
       val bundle = Bundle()
@@ -54,7 +58,10 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
 
       val itemSwitch = menu.findItem(R.id.neutrinoCatalogMenuSwitchCollection)
       itemSwitch.setOnMenuItemClickListener {
-        this.listener.neutrinoEventBus.onNext(NCatalogEvent.NCatalogCollectionSelectOpenRequested)
+        this.listener.neutrinoEventBus.onNext(
+          NeutrinoPageEvent.OpenPageOnCurrentTab(
+            callingPage = this,
+            constructor = NCatalogPageCollectionSelect.constructor()))
         true
       }
 
@@ -87,7 +94,9 @@ class NPageFeed : NPageAbstract(), NeutrinoPageType {
       button.setText("Next: $nextDepth")
       button.setOnClickListener {
         this.listener.neutrinoEventBus.onNext(
-          NCatalogEvent.NCatalogFeedRequested(currentArguments.copy(depth = nextDepth)))
+          NeutrinoPageEvent.OpenPageOnCurrentTab(
+            callingPage = this,
+            constructor = NPageFeed.constructor(currentArguments.copy(depth = nextDepth))))
       }
       view
     } else {

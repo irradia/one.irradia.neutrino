@@ -10,7 +10,7 @@ import one.irradia.neutrino.views.NeutrinoActivityHelper.Invalidated.NOT_INVALID
 
 object NeutrinoActivityHelper {
 
-  fun onNeutrinoTabPageStackChanged(
+  fun onNeutrinoTabUpdated(
     activity: AppCompatActivity,
     tab: NeutrinoTabType) {
 

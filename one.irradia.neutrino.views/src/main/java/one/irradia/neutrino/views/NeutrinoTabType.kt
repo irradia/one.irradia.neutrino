@@ -9,6 +9,18 @@ import java.io.Serializable
 interface NeutrinoTabType {
 
   /**
+   * The index of the tab
+   */
+
+  val tabIndex: Int
+
+  /**
+   * Create a page on the tab.
+   */
+
+  fun tabPageCreate(constructor: NPageConstructor)
+
+  /**
    * Retrieve the current page within the tab.
    */
 
@@ -45,4 +57,10 @@ interface NeutrinoTabType {
    */
 
   fun onPressedBack(): Boolean
+
+  /**
+   * Return `true` if the tab has the given page anywhere in the stack
+   */
+
+  fun tabHasPage(page: NeutrinoPageType): Boolean
 }

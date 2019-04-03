@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import java.io.Serializable
 
@@ -28,6 +29,8 @@ class NeutrinoMain : NeutrinoFragment() {
   private lateinit var tabsByIndex: Map<Int, NeutrinoTabType>
   private var tabCurrentIndex: Int = 0
   private var tabStates: Map<Int, Serializable>? = null
+  private var pageEventSubscription: Disposable? = null
+  private var tabEventSubscription: Disposable? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -103,20 +106,18 @@ class NeutrinoMain : NeutrinoFragment() {
     val context = this.requireContext()
 
     this.tabCatalog =
-      NCatalogTab(context, this.listener)
+      NCatalogTab(context, 0, this.listener)
     this.tabBooks =
-      NBooksTab(context, this.listener)
+      NBooksTab(context, 1, this.listener)
     this.tabReservations =
-      NReservationsTab(context, this.listener)
+      NReservationsTab(context, 2, this.listener)
     this.tabSettings =
-      NSettingsTab(context, this.listener)
+      NSettingsTab(context, 3, this.listener)
 
     this.tabsByIndex =
-      mapOf(
-        Pair(0, this.tabCatalog),
-        Pair(1, this.tabBooks),
-        Pair(2, this.tabReservations),
-        Pair(3, this.tabSettings))
+      listOf(this.tabCatalog, this.tabBooks, this.tabReservations, this.tabSettings)
+        .map { tab -> Pair(tab.tabIndex, tab) }
+        .toMap()
 
     val savedStates = this.tabStates
     if (savedStates != null) {
@@ -130,6 +131,62 @@ class NeutrinoMain : NeutrinoFragment() {
     }
 
     this.tabLayout.getTabAt(this.tabCurrentIndex)?.select()
+
+    this.pageEventSubscription =
+      this.eventBus.ofType(NeutrinoPageEvent::class.java)
+        .subscribe { event -> this.onPageEvent(event) }
+
+    this.tabEventSubscription =
+      this.eventBus.ofType(NeutrinoTabEvent::class.java)
+        .subscribe { event -> this.onTabEvent(event) }
+  }
+
+  override fun onStop() {
+    super.onStop()
+    this.pageEventSubscription?.dispose()
+    this.tabEventSubscription?.dispose()
+  }
+
+  private fun onTabEvent(event: NeutrinoTabEvent) {
+    when (event) {
+      is NeutrinoTabEvent.TabPageStackChanged -> {
+        if (event.tab.tabIndex == this.tabCurrentIndex) {
+          this.listener.onNeutrinoTabUpdated(event.tab)
+        }
+      }
+    }
+  }
+
+  private fun onPageEvent(event: NeutrinoPageEvent) {
+    when (event) {
+      is NeutrinoPageEvent.OpenPageOnCurrentTab ->
+        for (entry in tabsByIndex) {
+          if (entry.value.tabHasPage(event.callingPage)) {
+            openPageOnTab(entry.key, entry.value, event.constructor)
+            return
+          }
+        }
+
+      is NeutrinoPageEvent.OpenPageOnSpecificTab ->
+        for (entry in tabsByIndex) {
+          if (entry.value.javaClass == event.tab) {
+            openPageOnTab(entry.key, entry.value, event.constructor)
+            return
+          }
+        }
+    }
+  }
+
+  private fun openPageOnTab(
+    tabIndex: Int,
+    tab: NeutrinoTabType,
+    constructor: NPageConstructor) {
+
+    if (this.tabCurrentIndex != tab.tabIndex) {
+      this.tabLayout.getTabAt(tabIndex)?.select()
+    }
+
+    tab.tabPageCreate(constructor)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
