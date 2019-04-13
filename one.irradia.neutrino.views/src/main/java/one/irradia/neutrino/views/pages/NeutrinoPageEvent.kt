@@ -1,4 +1,7 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.pages
+
+import one.irradia.neutrino.views.api.NeutrinoEventType
+import one.irradia.neutrino.views.tabs.NeutrinoTabType
 
 sealed class NeutrinoPageEvent : NeutrinoEventType {
 

@@ -1,6 +1,8 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.pages
 
 import android.os.Bundle
+import one.irradia.neutrino.views.api.NeutrinoFragment
+import one.irradia.neutrino.views.api.NeutrinoListenerType
 
 /**
  * A convenient abstract class that takes some of the repetition out of page implementations.

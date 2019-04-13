@@ -1,4 +1,4 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.api
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,21 +8,30 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
+import one.irradia.neutrino.views.NTabBooks
+import one.irradia.neutrino.views.NTabCatalog
+import one.irradia.neutrino.views.NTabReservations
+import one.irradia.neutrino.views.NTabSettings
+import one.irradia.neutrino.views.R
+import one.irradia.neutrino.views.pages.NPageConstructor
+import one.irradia.neutrino.views.pages.NeutrinoPageEvent
+import one.irradia.neutrino.views.tabs.NeutrinoTabEvent
+import one.irradia.neutrino.views.tabs.NeutrinoTabType
 import java.io.Serializable
 
 class NeutrinoMain : NeutrinoFragment() {
 
   companion object {
-    private const val SAVED_STATE_KEY = "one.irradia.neutrino.views.NeutrinoMain.state"
+    private const val SAVED_STATE_KEY = "one.irradia.neutrino.views.api.NeutrinoMain.state"
   }
 
   val eventBus: PublishSubject<NeutrinoEventType> = PublishSubject.create<NeutrinoEventType>()
 
   private lateinit var tabLayout: TabLayout
-  private lateinit var tabCatalog: NCatalogTab
-  private lateinit var tabBooks: NBooksTab
-  private lateinit var tabReservations: NReservationsTab
-  private lateinit var tabSettings: NSettingsTab
+  private lateinit var tabCatalog: NTabCatalog
+  private lateinit var tabBooks: NTabBooks
+  private lateinit var tabReservations: NTabReservations
+  private lateinit var tabSettings: NTabSettings
   private lateinit var listener: NeutrinoListenerType
   private lateinit var tabListener: NTabListener
   private lateinit var tabCurrent: NeutrinoTabType
@@ -106,13 +115,13 @@ class NeutrinoMain : NeutrinoFragment() {
     val context = this.requireContext()
 
     this.tabCatalog =
-      NCatalogTab(context, 0, this.listener)
+      NTabCatalog(context, 0, this.listener)
     this.tabBooks =
-      NBooksTab(context, 1, this.listener)
+      NTabBooks(context, 1, this.listener)
     this.tabReservations =
-      NReservationsTab(context, 2, this.listener)
+      NTabReservations(context, 2, this.listener)
     this.tabSettings =
-      NSettingsTab(context, 3, this.listener)
+      NTabSettings(context, 3, this.listener)
 
     this.tabsByIndex =
       listOf(this.tabCatalog, this.tabBooks, this.tabReservations, this.tabSettings)

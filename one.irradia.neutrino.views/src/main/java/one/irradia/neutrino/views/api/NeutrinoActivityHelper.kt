@@ -1,12 +1,15 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.api
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar.DISPLAY_HOME_AS_UP
 import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_HOME
 import androidx.appcompat.app.AppCompatActivity
-import one.irradia.neutrino.views.NeutrinoActivityHelper.Invalidated.INVALIDATED
-import one.irradia.neutrino.views.NeutrinoActivityHelper.Invalidated.NOT_INVALIDATED
+import one.irradia.neutrino.views.R
+import one.irradia.neutrino.views.api.NeutrinoActivityHelper.Invalidated.INVALIDATED
+import one.irradia.neutrino.views.api.NeutrinoActivityHelper.Invalidated.NOT_INVALIDATED
+import one.irradia.neutrino.views.pages.NeutrinoPageType
+import one.irradia.neutrino.views.tabs.NeutrinoTabType
 
 object NeutrinoActivityHelper {
 
@@ -21,7 +24,7 @@ object NeutrinoActivityHelper {
       .replace(R.id.neutrinoTabContent, page.pageFragment(), "NEUTRINO_TAB_CONTENT")
       .commit()
 
-    this.updateAndRefreshActionBar(activity, tab, page)
+    updateAndRefreshActionBar(activity, tab, page)
   }
 
   enum class Invalidated {
@@ -101,13 +104,13 @@ object NeutrinoActivityHelper {
       .replace(R.id.neutrinoTabContent, page.pageFragment(), "NEUTRINO_TAB_CONTENT")
       .commit()
 
-    this.updateAndRefreshActionBar(activity, tab, page)
+    updateAndRefreshActionBar(activity, tab, page)
   }
 
   fun onNeutrinoPageMenuUpdated(
     activity: AppCompatActivity,
     page: NeutrinoPageType) {
-    this.updateTitle(activity, page)
+    updateTitle(activity, page)
   }
 
   fun onNeutrinoCreate(

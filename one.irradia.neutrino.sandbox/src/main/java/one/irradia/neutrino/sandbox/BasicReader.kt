@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.subjects.Subject
-import one.irradia.neutrino.views.NeutrinoActivityHelper
-import one.irradia.neutrino.views.NeutrinoEventType
-import one.irradia.neutrino.views.NeutrinoListenerType
-import one.irradia.neutrino.views.NeutrinoMain
-import one.irradia.neutrino.views.NeutrinoPageType
-import one.irradia.neutrino.views.NeutrinoTabType
+import one.irradia.neutrino.views.api.NeutrinoActivityHelper
+import one.irradia.neutrino.views.api.NeutrinoEventType
+import one.irradia.neutrino.views.api.NeutrinoListenerType
+import one.irradia.neutrino.views.api.NeutrinoMain
+import one.irradia.neutrino.views.pages.NeutrinoPageType
+import one.irradia.neutrino.views.tabs.NeutrinoTabType
 
 class BasicReader : AppCompatActivity(), NeutrinoListenerType {
 

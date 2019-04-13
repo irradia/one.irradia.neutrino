@@ -1,4 +1,4 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.pages
 
 import java.io.Serializable
 

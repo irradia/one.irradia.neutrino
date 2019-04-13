@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import one.irradia.neutrino.views.pages.NPageAbstract
+import one.irradia.neutrino.views.pages.NPageConstructor
 import java.io.Serializable
 
 class NCatalogPageCollectionSelect : NPageAbstract() {

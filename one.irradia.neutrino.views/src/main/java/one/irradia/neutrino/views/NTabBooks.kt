@@ -1,16 +1,20 @@
 package one.irradia.neutrino.views
 
 import android.content.Context
+import one.irradia.neutrino.views.api.NeutrinoListenerType
+import one.irradia.neutrino.views.pages.NPageConstructor
+import one.irradia.neutrino.views.tabs.NTabWithPageStack
+import one.irradia.neutrino.views.tabs.NeutrinoTabType
 
 /**
  * The books tab.
  */
 
-class NBooksTab(
+class NTabBooks(
   context: Context,
   override val tabIndex: Int,
   listener: NeutrinoListenerType)
-  : NPageStackTab(rootPage = rootPageConstructor(context), listener = listener),
+  : NTabWithPageStack(rootPage = rootPageConstructor(context), listener = listener),
   NeutrinoTabType {
 
   companion object {

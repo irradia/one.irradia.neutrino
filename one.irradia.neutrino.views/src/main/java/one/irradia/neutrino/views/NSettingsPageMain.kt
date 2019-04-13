@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import one.irradia.neutrino.views.NeutrinoPageEvent.OpenPageOnCurrentTab
-import one.irradia.neutrino.views.NeutrinoPageEvent.OpenPageOnSpecificTab
+import one.irradia.neutrino.views.pages.NPageAbstract
+import one.irradia.neutrino.views.pages.NPageConstructor
+import one.irradia.neutrino.views.pages.NeutrinoPageEvent.OpenPageOnCurrentTab
+import one.irradia.neutrino.views.pages.NeutrinoPageEvent.OpenPageOnSpecificTab
+import one.irradia.neutrino.views.pages.NeutrinoPageType
 import java.io.Serializable
 
 class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
@@ -78,7 +81,7 @@ class NSettingsPageMain : NPageAbstract(), NeutrinoPageType {
         this.listener.neutrinoEventBus.onNext(
           OpenPageOnSpecificTab(
             callingPage = this,
-            tab = NBooksTab::class.java,
+            tab = NTabBooks::class.java,
             constructor = NCatalogPageCollectionSelect.constructor()))
 
       }, 2_000)

@@ -1,5 +1,7 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.tabs
 
+import one.irradia.neutrino.views.pages.NPageConstructor
+import one.irradia.neutrino.views.pages.NeutrinoPageType
 import java.io.Serializable
 
 /**

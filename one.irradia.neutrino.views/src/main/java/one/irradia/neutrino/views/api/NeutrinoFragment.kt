@@ -1,4 +1,4 @@
-package one.irradia.neutrino.views
+package one.irradia.neutrino.views.api
 
 import androidx.fragment.app.Fragment
 
