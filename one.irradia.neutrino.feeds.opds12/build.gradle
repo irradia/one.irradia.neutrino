@@ -16,12 +16,24 @@
 
 configurations {
   implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyAndroidMaterial
-  implementation.extendsFrom dependencyRXJava
+
+  implementation.extendsFrom dependencySLF4J
+
+  implementation.extendsFrom dependencyIrradiaOPDS12API
+  implementation.extendsFrom dependencyIrradiaOPDS12Dublin
+  implementation.extendsFrom dependencyIrradiaOPDS12NYPL
+  implementation.extendsFrom dependencyIrradiaOPDS12ParserAPI
+  implementation.extendsFrom dependencyIrradiaOPDS12ParserImpl
 }
 
 dependencies {
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+  api project(":one.irradia.neutrino.feeds.model")
 
-  implementation project(':one.irradia.neutrino.feeds.api')
+  implementation project(":one.irradia.neutrino.feeds.spi")
+}
+
+android {
+  buildTypes.each {
+    buildType -> buildType.buildConfigField("String", "PARSER_PROVIDER_VERSION", "\"${VERSION_NAME}\"")
+  }
 }

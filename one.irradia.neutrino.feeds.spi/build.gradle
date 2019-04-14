@@ -16,12 +16,9 @@
 
 configurations {
   implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyAndroidMaterial
-  implementation.extendsFrom dependencyRXJava
+  implementation.extendsFrom dependencyIrradiaMimeAPI
 }
 
 dependencies {
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-  implementation project(':one.irradia.neutrino.feeds.api')
+  implementation project(":one.irradia.neutrino.feeds.model")
 }

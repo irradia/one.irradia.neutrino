@@ -15,13 +15,15 @@
  */
 
 configurations {
+  api.extendsFrom dependencyIrradiaHTTPAPI
+  api.extendsFrom dependencyGoogleGuava
+
   implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyAndroidMaterial
-  implementation.extendsFrom dependencyRXJava
+  implementation.extendsFrom dependencySLF4J
 }
 
 dependencies {
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+  api project(":one.irradia.neutrino.feeds.model")
 
-  implementation project(':one.irradia.neutrino.feeds.api')
+  implementation project(":one.irradia.neutrino.feeds.spi")
 }
