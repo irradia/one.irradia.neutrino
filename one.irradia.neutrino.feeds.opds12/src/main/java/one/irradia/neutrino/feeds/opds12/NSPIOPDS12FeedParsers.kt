@@ -15,6 +15,7 @@ import one.irradia.opds1_2.parser.extension.spi.OPDS12FeedExtensionParserProvide
 import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.lang.UnsupportedOperationException
+import java.util.Properties
 
 /**
  * A feed parser provider for OPDS 1.2 feeds.
@@ -35,7 +36,7 @@ class NSPIOPDS12FeedParsers(
 
   init {
     try {
-      this.versionVar = NSPIVersion.parse(BuildConfig.PARSER_PROVIDER_VERSION)
+      this.versionVar = NSPIVersion.parse(loadVersion())
     } catch (e: Exception) {
       this.logger.debug("could not parse version: ", e)
     }
@@ -83,5 +84,17 @@ class NSPIOPDS12FeedParsers(
       extensionEntryParsers = this.extensionEntryParsers))
 
     return NSPIOPDS12FeedParser(parser)
+  }
+
+  companion object {
+    private fun loadVersion(): String {
+      return NSPIOPDS12FeedParsers::class.java.getResourceAsStream(
+        "/one/irradia/neutrino/feeds/opds12/version.properties")
+        .use { stream ->
+          val properties = Properties()
+          properties.load(stream)
+          properties.getProperty("version")
+        }
+    }
   }
 }

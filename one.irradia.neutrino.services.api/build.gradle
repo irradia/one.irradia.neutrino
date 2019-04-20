@@ -15,19 +15,12 @@
  */
 
 configurations {
-  api.extendsFrom dependencyJUnit
-  api.extendsFrom dependencySLF4J
+  api.extendsFrom dependencyIrradiaServiceDirectoryAPI
 
   implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyIrradiaMimeImpl
-  implementation.extendsFrom dependencyIrradiaHTTPImpl
-
-  testImplementation.extendsFrom dependencyLogback
+  implementation.extendsFrom dependencyIrradiaServiceDirectoryImpl
 }
 
 dependencies {
-  implementation project(":one.irradia.neutrino.feeds.spi")
-  implementation project(":one.irradia.neutrino.feeds.model")
-  implementation project(":one.irradia.neutrino.feeds.opds12")
-  implementation project(":one.irradia.neutrino.feeds.api")
+
 }

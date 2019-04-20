@@ -32,8 +32,19 @@ dependencies {
   implementation project(":one.irradia.neutrino.feeds.spi")
 }
 
-android {
-  buildTypes.each {
-    buildType -> buildType.buildConfigField("String", "PARSER_PROVIDER_VERSION", "\"${VERSION_NAME}\"")
+def opds12ResourcesDir    = file("$buildDir/generated-resources/")
+def opds12ResourcesPkgDir = file("$opds12ResourcesDir/one/irradia/neutrino/feeds/opds12")
+
+task generateSources {
+  opds12ResourcesPkgDir.mkdirs()
+
+  def outputFile = file("$opds12ResourcesPkgDir/version.properties")
+  outputs.file(outputFile)
+  doLast {
+    outputFile.text = "version=${VERSION_NAME}"
   }
 }
+
+sourceSets.main.output.dir opds12ResourcesDir, builtBy: generateSources
+
+compileKotlin.dependsOn generateSources

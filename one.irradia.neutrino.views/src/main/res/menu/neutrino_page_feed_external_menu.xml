@@ -8,18 +8,18 @@
     android:icon="@drawable/neutrino_icon_search"
     android:title="@string/neutrino_search"
     app:actionViewClass="androidx.appcompat.widget.SearchView"
-    app:showAsAction="ifRoom|collapseActionView" />
+    app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/neutrinoCatalogMenuRoot"
     android:icon="@drawable/neutrino_icon_catalog_root"
     android:title="@string/neutrino_collection_root"
-    app:showAsAction="never" />
+    app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/neutrinoCatalogMenuSwitchCollection"
     android:icon="@drawable/neutrino_icon_switch_collection"
     android:title="@string/neutrino_collection_select"
-    app:showAsAction="never" />
+    app:showAsAction="ifRoom" />
 
 </menu>
