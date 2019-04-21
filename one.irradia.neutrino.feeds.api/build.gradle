@@ -14,16 +14,14 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  api.extendsFrom dependencyIrradiaHTTPAPI
-  api.extendsFrom dependencyGoogleGuava
-
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencySLF4J
-}
-
 dependencies {
   api project(":one.irradia.neutrino.feeds.model")
 
   implementation project(":one.irradia.neutrino.feeds.spi")
+
+  api libraries.irradiaHTTPAPI
+  api libraries.googleGuava
+
+  implementation libraries.kotlinStdlib
+  implementation libraries.slf4j
 }

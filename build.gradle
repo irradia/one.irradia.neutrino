@@ -60,6 +60,43 @@ ext {
   }
 }
 
+def irradiaOPDS12Version           = "0.0.4"
+def irradiaMIMEVersion             = "0.0.6"
+def irradiaHTTPVersion             = "0.0.1"
+def irradiaServiceDirectoryVersion = "0.0.1"
+
+ext.libraries = [
+  androidMaterial:                 "com.google.android.material:material:1.0.0",
+  androidSupportTestRules:         "com.android.support.test:rules:1.0.2",
+  androidSupportTestRunner:        "com.android.support.test:runner:1.0.2",
+  androidTestOrchestrator:         "com.android.support.test:orchestrator:1.0.2",
+  androidXActivity:                "androidx.activity:activity-ktx:1.0.0-alpha06",
+  androidXAppCompat:               "androidx.appcompat:appcompat:1.1.0-alpha04",
+  androidXCore:                    "androidx.core:core-ktx:1.0.1",
+  googleGuava:                     "com.google.guava:guava:27.1-android",
+  irradiaHTTPAPI:                  "one.irradia.http:one.irradia.http.api:${irradiaHTTPVersion}",
+  irradiaHTTPVanilla:              "one.irradia.http:one.irradia.http.vanilla:${irradiaHTTPVersion}",
+  irradiaMimeAPI:                  "one.irradia.mime:one.irradia.mime.api:${irradiaMIMEVersion}",
+  irradiaMimeVanilla:              "one.irradia.mime:one.irradia.mime.vanilla:${irradiaMIMEVersion}",
+  irradiaOPDS12API:                "one.irradia.opds1_2:one.irradia.opds1_2.api:${irradiaOPDS12Version}",
+  irradiaOPDS12Dublin:             "one.irradia.opds1_2:one.irradia.opds1_2.dublin:${irradiaOPDS12Version}",
+  irradiaOPDS12NYPL:               "one.irradia.opds1_2:one.irradia.opds1_2.nypl:${irradiaOPDS12Version}",
+  irradiaOPDS12ParserAPI:          "one.irradia.opds1_2:one.irradia.opds1_2.parser.api:${irradiaOPDS12Version}",
+  irradiaOPDS12ParserVanilla:      "one.irradia.opds1_2:one.irradia.opds1_2.vanilla:${irradiaOPDS12Version}",
+  irradiaServiceDirectoryAPI:      "one.irradia.servicedirectory:one.irradia.servicedirectory.api:${irradiaServiceDirectoryVersion}",
+  irradiaServiceDirectoryVanilla:  "one.irradia.servicedirectory:one.irradia.servicedirectory.vanilla:${irradiaServiceDirectoryVersion}",
+  jackson:                         "com.fasterxml.jackson.core:jackson-core:2.9.8",
+  jodaTime:                        "joda-time:joda-time:2.10.1",
+  junit:                           "junit:junit:4.12",
+  kotlinReflect:                   "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+  kotlinStdlib:                    "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+  logbackAndroid:                  "com.github.tony19:logback-android:2.0.0",
+  logbackClassic:                  "ch.qos.logback:logback-classic:1.3.0-alpha4",
+  okhttp:                          "com.squareup.okhttp3:okhttp:3.14.1",
+  rxjava:                          "io.reactivex.rxjava2:rxjava:2.2.8",
+  slf4j:                           "org.slf4j:slf4j-api:1.7.25"
+]
+
 apply plugin: "io.codearte.nexus-staging"
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
@@ -123,15 +160,10 @@ Automatic-Module-Name: ${POM_AUTOMATIC_MODULE_NAME}
         defaultConfig {
           minSdkVersion androidMinimumSDKVersion
           targetSdkVersion androidTargetSDKVersion
-          testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
         compileOptions {
           sourceCompatibility JavaVersion.VERSION_1_8
           targetCompatibility JavaVersion.VERSION_1_8
-        }
-        testOptions {
-          execution "ANDROID_TEST_ORCHESTRATOR"
-          animationsDisabled = true
         }
       }
       break
@@ -255,74 +287,6 @@ Automatic-Module-Name: ${POM_AUTOMATIC_MODULE_NAME}
     mavenLocal()
     jcenter()
     google()
-  }
-
-  configurations {
-    dependencyAndroidMaterial
-    dependencyAndroidSupportTestRules
-    dependencyAndroidSupportTestRunner
-    dependencyAndroidTestOrchestrator
-    dependencyAndroidXActivity
-    dependencyAndroidXAppCompat
-    dependencyAndroidXCore
-    dependencyGoogleGuava
-    dependencyIrradiaHTTPAPI
-    dependencyIrradiaHTTPImpl
-    dependencyIrradiaMimeAPI
-    dependencyIrradiaMimeImpl
-    dependencyIrradiaOPDS12API
-    dependencyIrradiaOPDS12Dublin
-    dependencyIrradiaOPDS12NYPL
-    dependencyIrradiaOPDS12ParserAPI
-    dependencyIrradiaOPDS12ParserImpl
-    dependencyIrradiaServiceDirectoryAPI
-    dependencyIrradiaServiceDirectoryImpl
-    dependencyJUnit
-    dependencyJackson
-    dependencyJodaTime
-    dependencyKotlinReflect
-    dependencyKotlinStdlib
-    dependencyLogback
-    dependencyOkHttp
-    dependencyRXJava
-    dependencySLF4J
-  }
-
-  dependencies {
-
-    def irradiaOPDS12Version           = "0.0.4"
-    def irradiaMIMEVersion             = "0.0.6"
-    def irradiaHTTPVersion             = "0.0.1"
-    def irradiaServiceDirectoryVersion = "0.0.1"
-
-    dependencyAndroidMaterial              "com.google.android.material:material:1.0.0"
-    dependencyAndroidSupportTestRules      "com.android.support.test:rules:1.0.2"
-    dependencyAndroidSupportTestRunner     "com.android.support.test:runner:1.0.2"
-    dependencyAndroidTestOrchestrator      "com.android.support.test:orchestrator:1.0.2"
-    dependencyAndroidXActivity             "androidx.activity:activity-ktx:1.0.0-alpha06"
-    dependencyAndroidXAppCompat            "androidx.appcompat:appcompat:1.1.0-alpha04"
-    dependencyAndroidXCore                 "androidx.core:core-ktx:1.0.1"
-    dependencyGoogleGuava                  "com.google.guava:guava:27.1-android"
-    dependencyIrradiaHTTPAPI               "one.irradia.http:one.irradia.http.api:${irradiaHTTPVersion}"
-    dependencyIrradiaHTTPImpl              "one.irradia.http:one.irradia.http.vanilla:${irradiaHTTPVersion}"
-    dependencyIrradiaMimeAPI               "one.irradia.mime:one.irradia.mime.api:${irradiaMIMEVersion}"
-    dependencyIrradiaMimeImpl              "one.irradia.mime:one.irradia.mime.vanilla:${irradiaMIMEVersion}"
-    dependencyIrradiaOPDS12API             "one.irradia.opds1_2:one.irradia.opds1_2.api:${irradiaOPDS12Version}"
-    dependencyIrradiaOPDS12Dublin          "one.irradia.opds1_2:one.irradia.opds1_2.dublin:${irradiaOPDS12Version}"
-    dependencyIrradiaOPDS12NYPL            "one.irradia.opds1_2:one.irradia.opds1_2.nypl:${irradiaOPDS12Version}"
-    dependencyIrradiaOPDS12ParserAPI       "one.irradia.opds1_2:one.irradia.opds1_2.parser.api:${irradiaOPDS12Version}"
-    dependencyIrradiaOPDS12ParserImpl      "one.irradia.opds1_2:one.irradia.opds1_2.vanilla:${irradiaOPDS12Version}"
-    dependencyIrradiaServiceDirectoryAPI   "one.irradia.servicedirectory:one.irradia.servicedirectory.api:${irradiaServiceDirectoryVersion}"
-    dependencyIrradiaServiceDirectoryImpl  "one.irradia.servicedirectory:one.irradia.servicedirectory.vanilla:${irradiaServiceDirectoryVersion}"
-    dependencyJUnit                        "junit:junit:4.12"
-    dependencyJackson                      "com.fasterxml.jackson.core:jackson-core:2.9.8"
-    dependencyJodaTime                     "joda-time:joda-time:2.10.1"
-    dependencyKotlinReflect                "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    dependencyKotlinStdlib                 "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    dependencyLogback                      "ch.qos.logback:logback-classic:1.3.0-alpha4"
-    dependencyOkHttp                       "com.squareup.okhttp3:okhttp:3.14.1"
-    dependencyRXJava                       "io.reactivex.rxjava2:rxjava:2.2.8"
-    dependencySLF4J                        "org.slf4j:slf4j-api:1.8.0-beta4"
   }
 }
 

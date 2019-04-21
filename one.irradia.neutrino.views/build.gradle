@@ -14,14 +14,11 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyAndroidMaterial
-  implementation.extendsFrom dependencyRXJava
-}
-
 dependencies {
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
   implementation project(':one.irradia.neutrino.feeds.api')
+
+  implementation libraries.slf4j
+  implementation libraries.kotlinStdlib
+  implementation libraries.androidMaterial
+  implementation libraries.rxjava
 }

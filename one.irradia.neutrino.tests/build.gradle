@@ -14,20 +14,18 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  api.extendsFrom dependencyJUnit
-  api.extendsFrom dependencySLF4J
-
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyIrradiaMimeImpl
-  implementation.extendsFrom dependencyIrradiaHTTPImpl
-
-  testImplementation.extendsFrom dependencyLogback
-}
-
 dependencies {
   implementation project(":one.irradia.neutrino.feeds.spi")
   implementation project(":one.irradia.neutrino.feeds.model")
   implementation project(":one.irradia.neutrino.feeds.opds12")
   implementation project(":one.irradia.neutrino.feeds.api")
+
+  api libraries.junit
+  api libraries.slf4j
+
+  implementation libraries.kotlinStdlib
+  implementation libraries.irradiaMimeVanilla
+  implementation libraries.irradiaHTTPVanilla
+
+  testImplementation libraries.logbackClassic
 }

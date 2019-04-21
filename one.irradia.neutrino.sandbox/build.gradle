@@ -14,15 +14,16 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyRXJava
-  implementation.extendsFrom dependencyAndroidXAppCompat
-  implementation.extendsFrom dependencyAndroidXActivity
-  implementation.extendsFrom dependencyAndroidXCore
-  implementation.extendsFrom dependencyAndroidMaterial
-}
-
 dependencies {
+  implementation project(":one.irradia.neutrino.services.api")
   implementation project(":one.irradia.neutrino.views")
+
+  implementation libraries.slf4j
+  implementation libraries.logbackAndroid
+  implementation libraries.kotlinStdlib
+  implementation libraries.rxjava
+  implementation libraries.androidXAppCompat
+  implementation libraries.androidXActivity
+  implementation libraries.androidXCore
+  implementation libraries.androidMaterial
 }

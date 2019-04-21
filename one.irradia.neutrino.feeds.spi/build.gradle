@@ -14,11 +14,9 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyIrradiaMimeAPI
-}
-
 dependencies {
   implementation project(":one.irradia.neutrino.feeds.model")
+
+  implementation libraries.kotlinStdlib
+  implementation libraries.irradiaMimeAPI
 }

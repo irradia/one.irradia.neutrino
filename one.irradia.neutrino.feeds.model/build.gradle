@@ -14,10 +14,6 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  implementation.extendsFrom dependencyKotlinStdlib
-}
-
 dependencies {
-
+  implementation libraries.kotlinStdlib
 }

@@ -14,22 +14,18 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  implementation.extendsFrom dependencyKotlinStdlib
-
-  implementation.extendsFrom dependencySLF4J
-
-  implementation.extendsFrom dependencyIrradiaOPDS12API
-  implementation.extendsFrom dependencyIrradiaOPDS12Dublin
-  implementation.extendsFrom dependencyIrradiaOPDS12NYPL
-  implementation.extendsFrom dependencyIrradiaOPDS12ParserAPI
-  implementation.extendsFrom dependencyIrradiaOPDS12ParserImpl
-}
-
 dependencies {
   api project(":one.irradia.neutrino.feeds.model")
 
   implementation project(":one.irradia.neutrino.feeds.spi")
+
+  implementation libraries.kotlinStdlib
+  implementation libraries.slf4j
+  implementation libraries.irradiaOPDS12API
+  implementation libraries.irradiaOPDS12Dublin
+  implementation libraries.irradiaOPDS12NYPL
+  implementation libraries.irradiaOPDS12ParserAPI
+  implementation libraries.irradiaOPDS12ParserVanilla
 }
 
 def opds12ResourcesDir    = file("$buildDir/generated-resources/")

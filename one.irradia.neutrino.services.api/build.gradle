@@ -14,13 +14,9 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-configurations {
-  api.extendsFrom dependencyIrradiaServiceDirectoryAPI
-
-  implementation.extendsFrom dependencyKotlinStdlib
-  implementation.extendsFrom dependencyIrradiaServiceDirectoryImpl
-}
-
 dependencies {
+  api libraries.irradiaServiceDirectoryAPI
 
+  implementation libraries.kotlinStdlib
+  implementation libraries.irradiaServiceDirectoryVanilla
 }

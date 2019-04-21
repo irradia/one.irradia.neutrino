@@ -11,7 +11,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@id/neutrinoTabLayout">
-
   </FrameLayout>
 
   <com.google.android.material.tabs.TabLayout
@@ -20,35 +19,6 @@
     android:layout_height="80dp"
     android:background="?attr/colorPrimary"
     android:layout_alignParentBottom="true"
-    app:tabTextAppearance="@style/TextAppearance.AppCompat.Caption">
-
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/neutrinoTabCatalog"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:icon="@drawable/neutrino_icon_catalog"
-      android:text="@string/neutrino_tab_catalog" />
-
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/neutrinoTabBooks"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:icon="@drawable/neutrino_icon_books"
-      android:text="@string/neutrino_tab_books" />
-
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/neutrinoTabReservations"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:icon="@drawable/neutrino_icon_reservations"
-      android:text="@string/neutrino_tab_reservations" />
-
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/neutrinoTabSettings"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:icon="@drawable/neutrino_icon_settings"
-      android:text="@string/neutrino_tab_settings" />
-  </com.google.android.material.tabs.TabLayout>
+    app:tabTextAppearance="@style/TextAppearance.AppCompat.Caption" />
 
 </RelativeLayout>

@@ -1,41 +1,76 @@
 package one.irradia.neutrino.sandbox
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import io.reactivex.subjects.Subject
-import one.irradia.neutrino.views.api.NeutrinoActivityHelper
-import one.irradia.neutrino.views.api.NeutrinoEventType
-import one.irradia.neutrino.views.api.NeutrinoListenerType
-import one.irradia.neutrino.views.api.NeutrinoMain
-import one.irradia.neutrino.views.pages.NeutrinoPageType
-import one.irradia.neutrino.views.tabs.NeutrinoTabType
+import androidx.appcompat.widget.Toolbar
+import one.irradia.neutrino.views.NTabController
+import one.irradia.neutrino.views.NTabControllerItem
+import org.slf4j.LoggerFactory
 
-class BasicReader : AppCompatActivity(), NeutrinoListenerType {
+class BasicReader : AppCompatActivity() {
 
-  override val neutrinoEventBus: Subject<NeutrinoEventType>
-    get() = this.neutrinoMain.eventBus
+  private val logger = LoggerFactory.getLogger(BasicReader::class.java)
 
-  private lateinit var neutrinoMain: NeutrinoMain
-
-  override fun onNeutrinoPageMenuUpdated(page: NeutrinoPageType) =
-    NeutrinoActivityHelper.onNeutrinoPageMenuUpdated(this, page)
-
-  override fun onNeutrinoTabUpdated(tab: NeutrinoTabType) =
-    NeutrinoActivityHelper.onNeutrinoTabUpdated(this, tab)
-
-  override fun onNeutrinoTabSelected(tab: NeutrinoTabType) =
-    NeutrinoActivityHelper.onNeutrinoTabSelected(this, tab)
-
-  override fun onBackPressed() {
-    NeutrinoActivityHelper.onNeutrinoBackPressed(this)
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean =
-    NeutrinoActivityHelper.onNeutrinoOptionsItemSelected(this, item)
+  private lateinit var content: ViewGroup
+  private lateinit var toolbar: Toolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    this.neutrinoMain = NeutrinoActivityHelper.onNeutrinoCreate(this, savedInstanceState)
+
+    this.logger.debug("onCreate: {}", savedInstanceState)
+
+    this.setContentView(R.layout.neutrino_activity)
+
+    this.content =
+      this.findViewById(R.id.neutrinoContent)
+    this.toolbar =
+      this.findViewById(R.id.neutrinoToolbar)
+
+    this.toolbar.title = "Neutrino Toolbar"
+    this.toolbar.inflateMenu(R.menu.neutrino_page_feed_external_menu)
+
+    val controller =
+      NTabController(
+        controllers = listOf(
+          NTabControllerItem(
+            title = "Controller A",
+            icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+            controller = NControllerA()
+          ),
+          NTabControllerItem(
+            title = "Controller B",
+            icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+            controller = NControllerB()
+          ),
+
+          NTabControllerItem(
+            title = "Controller B",
+            icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+            controller = NTabController(
+              controllers = listOf(
+                NTabControllerItem(
+                  title = "Controller A",
+                  icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+                  controller = NControllerA()
+                ),
+                NTabControllerItem(
+                  title = "Controller B",
+                  icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+                  controller = NControllerB()
+                )
+              ))
+          ),
+
+          NTabControllerItem(
+            title = "Controller C",
+            icon = this.resources.getDrawable(R.drawable.neutrino_icon_books, this.theme),
+            controller = NControllerC())))
+
+    val controllerView =
+      controller.onCreateView(this, this.layoutInflater, this.content)
+
+    this.content.addView(controllerView)
+    controller.onAttach()
   }
 }
